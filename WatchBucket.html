@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WatchBucket - Your Ultimate Show Tracker</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables based on WatchBucket Constants */
+        :root {
+            --bg-color: #000000;
+            --surface-color: #1C1C1E;
+            --primary-red: #FF453A;
+            --primary-red-hover: #e03d33;
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A5;
+            --border-color: #2C2C2E;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary-red);
+        }
+
+        .nav-btn {
+            background-color: var(--primary-red);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--primary-red-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 150px 5% 100px;
+            min-height: 100vh;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title span {
+            color: var(--primary-red);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .store-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: var(--text-main);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            width: fit-content;
+        }
+
+        .store-btn:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-red);
+        }
+
+        .store-btn i {
+            font-size: 1.8rem;
+        }
+
+        .store-text small {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .store-text strong {
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        /* Phone Mockup (CSS Only) */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background-color: var(--surface-color);
+            border: 8px solid #2C2C2E;
+            border-radius: 40px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(255, 69, 58, 0.15);
+            overflow: hidden;
+        }
+
+        /* Stylized UI inside the mockup */
+        .mockup-header {
+            padding: 40px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .mockup-title { width: 60%; height: 20px; background: var(--border-color); border-radius: 4px; margin-bottom: 10px; }
+        .mockup-subtitle { width: 40%; height: 12px; background: var(--primary-red); border-radius: 4px; }
+        .mockup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
+        .mockup-card { background: var(--bg-color); height: 160px; border-radius: 12px; border: 1px solid var(--border-color); }
+
+        /* Features Section */
+        .features {
+            padding: 80px 5%;
+            background-color: var(--surface-color);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-color);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-red);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 69, 58, 0.1);
+            color: var(--primary-red);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Banner CTA */
+        .cta-section {
+            padding: 100px 5%;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255, 69, 58, 0.1) 100%);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 5%;
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-red);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 120px;
+            }
+            .hero-content {
+                margin-bottom: 60px;
+            }
+            .download-buttons {
+                justify-content: center;
+            }
+            .hero-title {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-bucket"></i>
+            WatchBucket
+        </div>
+        <a href="#download" class="nav-btn">Get the App</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Track your shows.<br><span>Master your time.</span></h1>
+            <p class="hero-subtitle">The ultimate, privacy-first companion for organizing your Movies, Dramas, Anime, and more. Keep track of what to watch, what you're watching, and what you've finished.</p>
+            
+            <div class="download-buttons" id="download">
+                <a href="#" class="store-btn">
+                    <i class="fa-brands fa-google-play"></i>
+                    <div class="store-text">
+                        <small>GET IT ON</small>
+                        <strong>Google Play</strong>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Abstract CSS Phone Mockup representing the app UI -->
+        <div class="hero-image">
+            <div class="phone-mockup">
+                <div class="mockup-header">
+                    <div class="mockup-title"></div>
+                    <div class="mockup-subtitle"></div>
+                </div>
+                <div class="mockup-grid">
+                    <div class="mockup-card"></div>
+                    <div class="mockup-card"></div>
+                    <div class="mockup-card"></div>
+                    <div class="mockup-card"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-header">
+            <h2>Everything you need. <br>Nothing you don't.</h2>
+            <p>Designed for binge-watchers and casual viewers alike.</p>
+        </div>
+
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3>Organize by Status</h3>
+                <p>Categorize your library into <strong>To Watch</strong>, <strong>Watching</strong>, and <strong>Finished</strong>. Filter by Movies, Dramas, Anime, Variety, and Others instantly.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h3>Decide For Me</h3>
+                <p>Can't pick what to watch next? Let our animated roulette randomly select a show from your To Watch list. You can even filter the roulette pool.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-pause"></i>
+                </div>
+                <h3>Resume Watching</h3>
+                <p>Never lose your spot again. Log the exact timestamp and episode where you paused, and add quick notes for when you return to the show.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>100% Offline & Private</h3>
+                <p>No accounts, no tracking. Your data is stored locally on your device. Easily generate ZIP backups to restore your watch history anywhere.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="cta-section">
+        <h2>Ready to fill your Bucket?</h2>
+        <p>Join the sleekest, dark-mode native app to track your viewing journey. Zero ads, zero subscriptions, complete control.</p>
+        <a href="#download" class="nav-btn" style="padding: 15px 30px; font-size: 1.1rem;">Download WatchBucket Free</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-copy">
+            &copy; 2026 WatchBucket. All rights reserved.
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Support</a>
+        </div>
+    </footer>
+
+</body>
+</html>
